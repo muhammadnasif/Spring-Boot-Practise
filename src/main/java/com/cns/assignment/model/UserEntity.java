@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +21,11 @@ import java.util.Set;
 public class UserEntity {
 
     @Id
-    @Column(name = "username")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "uid")
+    private Long uid;
+
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
     @Column(name = "email")
@@ -32,7 +35,7 @@ public class UserEntity {
     private String password;
 
     @Column(name = "createdAt")
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;

@@ -33,9 +33,9 @@ public class ProjectController {
     }
 
     @PostMapping("/")
-    ProjectEntity createProject(@Valid @RequestBody ProjectEntity projectEntity) {
+    ProjectEntity createProject(@Valid @RequestBody ProjectEntity projectEntity, @RequestParam("uid") Long uid) {
         // saving a new project returns that entity's object that is stored in this "newProject"
-        ProjectEntity newProject = this.projectManagementService.createProject(projectEntity); // need to implement try catch for error handling
+        ProjectEntity newProject = this.projectManagementService.createProject(projectEntity, uid); // need to implement try catch for error handling
         return newProject;
     }
 
