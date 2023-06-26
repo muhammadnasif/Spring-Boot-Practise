@@ -2,9 +2,9 @@ package com.cns.assignment.service;
 
 
 import com.cns.assignment.model.ProjectEntity;
+import com.cns.assignment.model.UserEntity;
 import com.cns.assignment.repository.ProjectRepository;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.springframework.data.domain.Page;
+import com.cns.assignment.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,18 @@ import java.util.Optional;
 public class ProjectManagementServiceImpl implements ProjectManagementService {
 
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
-    ProjectManagementServiceImpl(ProjectRepository projectRepository) {
+    ProjectManagementServiceImpl(ProjectRepository projectRepository, UserRepository userRepository) {
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
-    public ProjectEntity createProject(ProjectEntity projectEntity) {
+    public ProjectEntity createProject(ProjectEntity projectEntity, Long uid) {
+
+        Optional<UserEntity> owner = this.userRepository.findById(uid);
+        if(owner.isPresent()) projectEntity.setOwner(owner.get());
+
         return this.projectRepository.save(projectEntity);
     }
 

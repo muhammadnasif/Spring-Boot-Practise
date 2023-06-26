@@ -2,10 +2,9 @@ package com.cns.assignment.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +16,11 @@ import javax.persistence.Table;
 public class UserEntity {
 
     @Id
-    @Column(name = "username")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "uid")
+    private Long uid;
+
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
     @Column(name = "email")
@@ -27,8 +30,8 @@ public class UserEntity {
     private String password;
 
     @Column(name = "createdAt")
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updatedAt")
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 }

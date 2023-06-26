@@ -39,5 +39,9 @@ public class ProjectEntity {
     @Column(name = "endDate")
     private String endDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="owner_uid")
+    private UserEntity owner;
+
 }
 
