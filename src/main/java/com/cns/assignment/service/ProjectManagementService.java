@@ -8,4 +8,5 @@ public interface ProjectManagementService {
     Boolean removeProject(Long id);
     Boolean updateProjectById(ProjectEntity updatedProjectEntity);
     Iterable<ProjectEntity> getProjects(int page, int limit);
+    Boolean assignOneUserToProject(Long id);
 }

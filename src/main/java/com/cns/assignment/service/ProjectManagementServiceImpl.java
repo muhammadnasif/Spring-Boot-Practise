@@ -63,4 +63,9 @@ public class ProjectManagementServiceImpl implements ProjectManagementService {
             return Boolean.FALSE;
         }
     }
+
+    public Boolean assignOneUserToProject(Long id) {
+
+        return Boolean.TRUE;
+    }
 }

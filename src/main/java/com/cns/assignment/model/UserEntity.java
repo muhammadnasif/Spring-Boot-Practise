@@ -6,6 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -30,5 +35,14 @@ public class UserEntity {
     private String createdAt;
 
     @Column(name = "updatedAt")
-    private String updatedAt;
+    private LocalDateTime updatedAt;
+
+    @ManyToMany
+    @JoinTable(
+            name = "project_member",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
+    private Set<ProjectEntity> projectEntities = new HashSet<>();
+
 }

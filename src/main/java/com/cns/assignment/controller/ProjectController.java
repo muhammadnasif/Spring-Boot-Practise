@@ -51,4 +51,10 @@ public class ProjectController {
         else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Project not found or deletion failed");
     }
 
+    @PostMapping("/{id}/assign/")
+    String assignOneUserToProject(@PathVariable Long id) {
+        if(this.projectManagementService.assignOneUserToProject(id)) return "success";
+        return "failed";
+    }
+
 }
