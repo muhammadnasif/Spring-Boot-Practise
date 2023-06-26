@@ -9,6 +9,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
-//    Optional<ProjectEntity> getProjectEntityById(Long id) throws ProjectNotFoundException;
 
 }
