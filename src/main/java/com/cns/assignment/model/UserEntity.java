@@ -1,5 +1,6 @@
 package com.cns.assignment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class UserEntity {
 
     @Id
@@ -40,12 +43,18 @@ public class UserEntity {
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 
-    @ManyToMany
-    @JoinTable(
-            name = "project_member",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id")
-    )
-    private Set<ProjectEntity> projectEntities = new HashSet<>();
+//    @ManyToMany(mappedBy = "users")
+//    private Set<ProjectEntity> projects = new HashSet<>();
 
+
+    public String toString() {
+        return "UserEntity{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

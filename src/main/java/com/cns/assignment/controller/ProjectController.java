@@ -1,17 +1,15 @@
 package com.cns.assignment.controller;
 
 
+import com.cns.assignment.dto.UsersIdDTO;
 import com.cns.assignment.model.ProjectEntity;
+import com.cns.assignment.model.UserEntity;
 import com.cns.assignment.service.ProjectManagementService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/project")
@@ -28,15 +26,13 @@ public class ProjectController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit
     ) {
-        Iterable<ProjectEntity> pageInfo = this.projectManagementService.getProjects(page, limit);
-        return pageInfo;
+        return this.projectManagementService.getProjects(page, limit);
     }
 
     @PostMapping("/")
     ProjectEntity createProject(@Valid @RequestBody ProjectEntity projectEntity, @RequestParam("uid") Long uid) {
         // saving a new project returns that entity's object that is stored in this "newProject"
-        ProjectEntity newProject = this.projectManagementService.createProject(projectEntity, uid); // need to implement try catch for error handling
-        return newProject;
+        return this.projectManagementService.createProject(projectEntity, uid);
     }
 
     @PutMapping("/")
@@ -52,9 +48,14 @@ public class ProjectController {
     }
 
     @PostMapping("/{id}/assign/")
-    String assignOneUserToProject(@PathVariable Long id) {
-        if(this.projectManagementService.assignOneUserToProject(id)) return "success";
+    String assignUsersToProject(@PathVariable Long id, @RequestBody UsersIdDTO usersIdDTO) {
+        if(this.projectManagementService.assignUsersToProject(id, usersIdDTO)) return "success";
         return "failed";
+    }
+
+    @GetMapping("/{id}/assigned-users/")
+    public Iterable<UserEntity> getAssignedUsersByProjectId(@PathVariable Long id) {
+        return this.projectManagementService.assignedUserOfProjectById(id);
     }
 
 }

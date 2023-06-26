@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -43,5 +45,23 @@ public class ProjectEntity {
     @JoinColumn(name ="owner_uid")
     private UserEntity owner;
 
+    @ManyToMany
+    @JoinTable(
+            name = "project_member",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<UserEntity> users = new HashSet<>();
+
+    public String toString() {
+        return "ProjectEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", intro='" + intro + '\'' +
+                ", status=" + status +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                '}';
+    }
 }
 
