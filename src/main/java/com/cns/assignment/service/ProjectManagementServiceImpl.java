@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,24 +93,15 @@ public class ProjectManagementServiceImpl implements ProjectManagementService {
     public Iterable<UserEntity> assignedUserOfProjectById(Long id) {
         Optional<ProjectEntity> project = this.projectRepository.findById(id);
         if (project.isPresent()) {
-
-            System.out.println("Here it is");
-            System.out.println("Here it is");
-            System.out.println("Here it is");
-            System.out.println("Here it is");
-            System.out.println("Here it is");
-
-            System.out.println(project.get().getClass().getSimpleName());
-
-            System.out.println("Here it is");
-            System.out.println("Here it is");
-            System.out.println("Here it is");
-            System.out.println("Here it is");
-            System.out.println("Here it is");
-
             return project.get().getUsers();
         } else {
             return null;
         }
+    }
+
+    @Override
+    public ProjectEntity getProjectById(Long id) {
+        Optional<ProjectEntity> project = this.projectRepository.findById(id);
+        return project.orElse(null);
     }
 }

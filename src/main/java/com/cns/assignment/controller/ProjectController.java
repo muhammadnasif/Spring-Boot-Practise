@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/project")
+@CrossOrigin(origins = "http://localhost:8081")
 public class ProjectController {
 
     private final ProjectManagementService projectManagementService;
@@ -27,6 +28,11 @@ public class ProjectController {
             @RequestParam(defaultValue = "10") int limit
     ) {
         return this.projectManagementService.getProjects(page, limit);
+    }
+
+    @GetMapping("/{id}")
+    public ProjectEntity getProjectById(@PathVariable Long id) {
+        return this.projectManagementService.getProjectById(id);
     }
 
     @PostMapping("/")

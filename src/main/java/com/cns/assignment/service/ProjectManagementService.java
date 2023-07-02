@@ -11,4 +11,5 @@ public interface ProjectManagementService {
     Iterable<ProjectEntity> getProjects(int page, int limit);
     Boolean assignUsersToProject(Long id, UsersIdDTO usersIdDTO);
     Iterable<UserEntity> assignedUserOfProjectById(Long id);
+    ProjectEntity getProjectById(Long id);
 }
