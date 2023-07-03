@@ -28,7 +28,7 @@ public class ReportServiceImpl implements ReportService{
         Map<String , Object> parameters = new HashMap<>();
         parameters.put("createdBy", "Muhammad Nasif Imtiaz");
 
-        List<ProjectEntity> projects = this.projectRepository.findAllById(Collections.singleton(id));
+        List<ProjectEntity> projects = this.projectRepository.findProjectsByOwnerId(id);
 
         File file = ResourceUtils.getFile("classpath:jasper_summary.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());

@@ -116,7 +116,7 @@
                 <textElement textAlignment="Center">
                     <font size="14" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Owner]]></text>
+                <text><![CDATA[Intro]]></text>
             </staticText>
         </band>
     </columnHeader>
