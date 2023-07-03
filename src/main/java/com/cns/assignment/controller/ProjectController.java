@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("api/project")
@@ -70,7 +71,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/generate-report/")
-    public String generateJasperReport(@PathVariable Long id) throws JRException, FileNotFoundException {
+    public String generateJasperReport(@PathVariable Long id) throws JRException, IOException {
         return this.reportService.exportReport(id);
     }
 

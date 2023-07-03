@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("api/user")
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}/generate-report/")
-    public String generateReport(@PathVariable Long id) throws JRException, FileNotFoundException {
+    public String generateReport(@PathVariable Long id) throws JRException, IOException {
         return this.reportService.exportReport(id);
     }
 }
