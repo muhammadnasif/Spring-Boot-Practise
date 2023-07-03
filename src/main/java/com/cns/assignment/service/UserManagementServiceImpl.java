@@ -23,4 +23,10 @@ public class UserManagementServiceImpl implements UserManagementService{
         return this.userRepository.save(user);
     }
 
+    @Override
+    public Iterable<UserEntity> getUsers(int page, int limit) {
+        return this.userRepository.findAll();
+    }
+
+
 }

@@ -5,11 +5,14 @@ import com.cns.assignment.dto.UsersIdDTO;
 import com.cns.assignment.model.ProjectEntity;
 import com.cns.assignment.model.UserEntity;
 import com.cns.assignment.service.ProjectManagementService;
+import com.cns.assignment.service.ReportService;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
 
 @RestController
 @RequestMapping("api/project")
@@ -17,9 +20,11 @@ import javax.validation.Valid;
 public class ProjectController {
 
     private final ProjectManagementService projectManagementService;
+    private final ReportService reportService;
 
-    public ProjectController(ProjectManagementService projectManagementService) {
+    public ProjectController(ProjectManagementService projectManagementService, ReportService reportService) {
         this.projectManagementService = projectManagementService;
+        this.reportService = reportService;
     }
 
     @GetMapping("/")
@@ -43,7 +48,7 @@ public class ProjectController {
 
     @PutMapping("/")
     ResponseEntity<String> updateProject(@Valid @RequestBody ProjectEntity project) {
-        if(this.projectManagementService.updateProjectById(project)) return ResponseEntity.ok("Updated Successfully");
+        if (this.projectManagementService.updateProjectById(project)) return ResponseEntity.ok("Updated Successfully");
         else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error occurred in the server");
     }
 
@@ -55,13 +60,18 @@ public class ProjectController {
 
     @PostMapping("/{id}/assign/")
     String assignUsersToProject(@PathVariable Long id, @RequestBody UsersIdDTO usersIdDTO) {
-        if(this.projectManagementService.assignUsersToProject(id, usersIdDTO)) return "success";
+        if (this.projectManagementService.assignUsersToProject(id, usersIdDTO)) return "success";
         return "failed";
     }
 
     @GetMapping("/{id}/assigned-users/")
     public Iterable<UserEntity> getAssignedUsersByProjectId(@PathVariable Long id) {
         return this.projectManagementService.assignedUserOfProjectById(id);
+    }
+
+    @GetMapping("/{id}/generate-report/")
+    public String generateJasperReport(@PathVariable Long id) throws JRException, FileNotFoundException {
+        return this.reportService.exportReport(id);
     }
 
 }
