@@ -2,6 +2,7 @@ package com.cns.assignment.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor
@@ -41,6 +44,8 @@ public class UserEntity {
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<RoleEntity> roles = new ArrayList<>();
 //    @ManyToMany(mappedBy = "users")
 //    private Set<ProjectEntity> projects = new HashSet<>();
 
