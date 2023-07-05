@@ -4,7 +4,10 @@ package com.cns.assignment.controller;
 import com.cns.assignment.model.UserEntity;
 import com.cns.assignment.service.ReportService;
 import com.cns.assignment.service.UserManagementService;
+import lombok.Data;
 import net.sf.jasperreports.engine.JRException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +22,7 @@ public class UserController {
     private final UserManagementService userManagementService;
     private final ReportService reportService;
 
-    public UserController (UserManagementService userManagementService, ReportService reportService) {
+    public UserController(UserManagementService userManagementService, ReportService reportService) {
         this.reportService = reportService;
         this.userManagementService = userManagementService;
     }
@@ -40,4 +43,17 @@ public class UserController {
     public String generateReport(@PathVariable Long id) throws JRException, IOException {
         return this.reportService.exportReport(id);
     }
+
+    @PostMapping("/log-in/")
+    public ResponseEntity<?> getUserByUsername(@RequestBody LoginForm loginForm) {
+        UserEntity userEntity = this.userManagementService.findByUsername(loginForm.getUsername(), loginForm.getPassword());
+        if (userEntity == null) return ResponseEntity.ok().body("Not found user");
+        else return ResponseEntity.ok().body(userEntity);
+    }
+}
+
+@Data
+class LoginForm {
+    String username;
+    String password;
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class UserManagementServiceImpl implements UserManagementService{
+public class UserManagementServiceImpl implements UserManagementService {
 
     private final UserRepository userRepository;
 
@@ -21,6 +21,16 @@ public class UserManagementServiceImpl implements UserManagementService{
         user.setCreatedAt(currentDateTime);
 
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public UserEntity findByUsername(String username, String password) {
+        UserEntity user = this.userRepository.findByUsername(username);
+
+        if (user != null) {
+            if (user.getPassword().equals(password)) return user;
+        }
+        return null;
     }
 
     @Override

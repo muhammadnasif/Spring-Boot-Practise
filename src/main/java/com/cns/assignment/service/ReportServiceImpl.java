@@ -31,8 +31,13 @@ public class ReportServiceImpl implements ReportService{
 //        String path = "C:\\Users\\DELL\\Desktop\\jasper-cns-report\\report.pdf";
         Map<String , Object> parameters = new HashMap<>();
         String path = "\\jasper-report\\jasper_cns.pdf";
-
         String staticFolderPath = this.resourceLoader.getResource("classpath:static").getFile().getAbsolutePath();
+
+
+        File folder = new File(path + "\\jasper-report");
+        if(!folder.exists()) {
+            boolean created = folder.mkdir();
+        }
 
         parameters.put("createdBy", "Muhammad Nasif Imtiaz");
     

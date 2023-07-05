@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/project")
@@ -47,7 +48,7 @@ public class ProjectController {
         return this.projectManagementService.createProject(projectEntity, uid);
     }
 
-    @PutMapping("/")
+    @PostMapping("/update/")
     ResponseEntity<String> updateProject(@Valid @RequestBody ProjectEntity project) {
         if (this.projectManagementService.updateProjectById(project)) return ResponseEntity.ok("Updated Successfully");
         else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error occurred in the server");
@@ -74,5 +75,11 @@ public class ProjectController {
     public String generateJasperReport(@PathVariable Long id) throws JRException, IOException {
         return this.reportService.exportReport(id);
     }
+
+    @GetMapping("/owner/{id}/fetch-projects/")
+    public ResponseEntity<List<ProjectEntity>> getProjectsByOwnerId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(this.projectManagementService.getProjectsByOwnerId(id));
+    }
+
 
 }

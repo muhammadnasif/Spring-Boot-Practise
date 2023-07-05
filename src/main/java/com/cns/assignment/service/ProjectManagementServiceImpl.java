@@ -35,6 +35,11 @@ public class ProjectManagementServiceImpl implements ProjectManagementService {
         return this.projectRepository.save(projectEntity);
     }
 
+    @Override
+    public ProjectEntity updateProject(ProjectEntity projectEntity) {
+        return this.projectRepository.save(projectEntity);
+    }
+
     public Boolean removeProject(Long id) {
         Optional<ProjectEntity> project = this.projectRepository.findById(id);
         if (project.isPresent()) {
@@ -104,4 +109,10 @@ public class ProjectManagementServiceImpl implements ProjectManagementService {
         Optional<ProjectEntity> project = this.projectRepository.findById(id);
         return project.orElse(null);
     }
+
+    public List<ProjectEntity> getProjectsByOwnerId(Long id) {
+        return this.projectRepository.findProjectsByOwnerId(id);
+    }
+
+
 }
